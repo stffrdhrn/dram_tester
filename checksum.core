@@ -1,0 +1,26 @@
+CAPI=1
+[main]
+description = "Checksum from Mossberg"
+simulators = icarus
+
+[fileset rtl_files]
+files =
+ checksum.v
+file_type = verilogSource
+usage = sim synth
+
+[fileset tb_files]
+scope = private
+files =
+ checksum_tb.v
+file_type = verilogSource
+usage = sim
+
+
+[simulator]
+toplevel = checksum_tb
+
+[provider]
+name = github
+user = mossberg
+repo = checksum

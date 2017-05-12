@@ -1,0 +1,39 @@
+CAPI=1
+[main]
+description = "Dram tester for de0 nano"
+simulators = icarus
+depend = dram_controller checksum
+
+[fileset rtl_files]
+files =
+ rtl/tester_ctrl.v
+file_type = verilogSource
+usage = sim synth
+
+[fileset top_files]
+scope = private
+files =
+ rtl/pll.v
+ rtl/toplevel.v
+file_type = verilogSource
+usage = synth
+
+[fileset tb_files]
+scope = private
+files =
+ bench/dram_tester_tb.v
+file_type = verilogSource
+usage = sim
+
+[icarus]
+depend = mt48lc16m16a2 vlog_tb_utils-1.0
+# iverilog_options = -Wtimescale
+
+[simulator]
+depend = mt48lc16m16a2 vlog_tb_utils-1.0
+toplevel = dram_tester_tb
+
+#[provider]
+#name = github
+#user = stffrdhrn
+#repo = digi_recorder
