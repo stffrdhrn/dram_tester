@@ -13,14 +13,14 @@ begin
 end
 
 always
-  #1  clk <= ~clk;
+  #5000  clk <= ~clk;
 
 initial
 begin
-  #4 rst_n = 0;
-  #4 rst_n = 1;
+  #20000 rst_n = 0;
+  #20000 rst_n = 1;
 
-  #1000 $finish;
+  #50_000_000 $finish;
 end
 
 wire 	[23:0] addr;
@@ -46,11 +46,13 @@ wire        sdram_cke_pad_o;
 
 wire [7:0]  gpio0_io;
 
-assign addr[23:4] = 20'd0;
+parameter TEST_ADDR_BITS = 7;
+
+assign addr[23:TEST_ADDR_BITS] = {24-TEST_ADDR_BITS{1'b0}};
 
 /* Tester */
 tester_ctrl #(
-  .ADDR_WIDTH  (4)
+  .ADDR_WIDTH  (TEST_ADDR_BITS)
 ) tester_ctrl0 (
   .clk         (clk),
   .rst_n       (rst_n),
@@ -61,7 +63,7 @@ tester_ctrl #(
   .rd_ready_i  (rd_ready),
   .rd_data_i   (rd_data),
   .wr_data_o   (wr_data),
-  .addr_o      (addr[3:0]),
+  .addr_o      (addr[TEST_ADDR_BITS-1:0]),
 
   .leds_o      (gpio0_io)
 );
