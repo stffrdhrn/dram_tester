@@ -99,7 +99,7 @@ begin
     else
       next = RD_INC;
   RD_INC:
-    if (!addr_o) /* Address has overflowed again done */
+    if (&addr_o) /* Address has overflowed again done */
       next = PASS;
     else
       next = RD;
